@@ -1,0 +1,28 @@
+'M10 call fund info and update position of fund
+Public Sub UpdateFundPosition(sh_fund As Object, sh_pos As Object)
+ Dim code As String
+ 
+ sh_fund.range("A1:C1000").Copy sh_pos.range("A1")
+ 
+ For i = 2 To sh_pos.range("A1").CurrentRegion.Rows.count
+ code = CStr(sh_pos.Cells(i, "C").value)
+ t_1 = GetFundInfo_T_1(code)
+ t0 = GetFundInfo_T0(code)
+ inc = (t0 - t_1) / t_1
+ 
+ pos = inc / sh_pos.Cells(i, "B").value
+ 
+ sh_pos.Cells(i, "E").value = t0
+ sh_pos.Cells(i, "D").value = GetFundInfo_Date(code)
+ sh_pos.Cells(i, "F").value = inc
+ sh_pos.Cells(i, "G").value = pos ' position
+' datastr = Format(Now, "yyyy/mm/dd")
+ 
+ sh_fund.Cells(i, "D") = sh_pos.Cells(i, "G")
+ sh_fund.Cells(i, "E") = sh_pos.Cells(i, "E")
+  
+ Next i
+
+
+End Sub
+
