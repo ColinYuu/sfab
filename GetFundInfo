@@ -1,0 +1,60 @@
+
+'给如基金代码，返回基金净值等信息
+Public Function GetFundInfo(code As String) As String()
+
+
+Dim base_URL As String
+Dim res As String
+Dim parsed_data As String
+Dim data_array() As String
+
+base_URL = "http://hq.sinajs.cn/list=f_" + code
+
+
+res = DownloadTextFile(base_URL)
+parsed_data = GetStringFromQuotation(res, """")
+
+
+data_array = Split(parsed_data, ",")
+GetFundInfo = data_array
+
+End Function
+
+
+
+Public Function GetFundInfo_T0(code As String) As String
+Dim fund_infos() As String
+
+fund_infos = GetFundInfo(code)
+
+GetFundInfo_T0 = fund_infos(1)
+
+End Function
+
+Public Function GetFundInfo_T_1(code As String) As String
+Dim fund_infos() As String
+
+fund_infos = GetFundInfo(code)
+
+GetFundInfo_T_1 = fund_infos(3)
+
+End Function
+
+Public Function GetFundInfo_Name(code As String) As String
+Dim fund_infos() As String
+
+fund_infos = GetFundInfo(code)
+
+GetFundInfo_Name = fund_infos(0)
+
+End Function
+
+Public Function GetFundInfo_Date(code As String) As String
+Dim fund_infos() As String
+
+fund_infos = GetFundInfo(code)
+
+GetFundInfo_Date = fund_infos(4)
+
+End Function
+
